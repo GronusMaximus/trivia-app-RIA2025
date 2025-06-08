@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Trivia } from './trivia';
+import { TriviaService } from './trivia.service';
 
 describe('Trivia', () => {
-  let service: Trivia;
+  let service: TriviaService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Trivia);
+    service = TestBed.inject(TriviaService);
   });
 
   it('should be created', () => {

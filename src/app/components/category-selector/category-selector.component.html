@@ -1,0 +1,15 @@
+<div class="category-container">
+  <h2>Selecciona una categoría</h2>
+
+  <div *ngIf="categories.length === 0">
+    <p>Cargando categorías...</p>
+  </div>
+
+  <ul class="category-list">
+    <li *ngFor="let category of categories"
+        [class.selected]="selectedCategoryId === category.id"
+        (click)="selectCategory(category.id)">
+      {{ category.name }}
+    </li>
+  </ul>
+</div>
