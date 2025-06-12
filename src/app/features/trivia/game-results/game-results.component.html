@@ -1,0 +1,32 @@
+<mat-card>
+    <h2>¡Trivia Finalizada!</h2>
+    <p>Respuestas correctas: <b>{{ settings.correctCount }}</b> / {{ settings.questions.length }}</p>
+    <mat-divider></mat-divider>
+    <table mat-table [dataSource]="settings.questions">
+
+        <!-- Pregunta -->
+        <ng-container matColumnDef="pregunta">
+            <th mat-header-cell *matHeaderCellDef>Pregunta</th>
+            <td mat-cell *matCellDef="let q"> {{ q.question }} </td>
+        </ng-container>
+
+        <!-- Correcta -->
+        <ng-container matColumnDef="correcta">
+            <th mat-header-cell *matHeaderCellDef>Correcta</th>
+            <td mat-cell *matCellDef="let q"> {{ q.correct_answer }} </td>
+        </ng-container>
+
+        <!-- Respuesta del usuario -->
+        <ng-container matColumnDef="respuesta">
+            <th mat-header-cell *matHeaderCellDef>Tu respuesta</th>
+            <td mat-cell *matCellDef="let q; let i = index">
+                {{ settings.userAnswers[i] || 'Sin responder' }}
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <button mat-raised-button color="primary" routerLink="/">Volver a jugar</button>
+</mat-card>
