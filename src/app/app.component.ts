@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router'; 
-import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
+import { RouterOutlet } from '@angular/router';
+import { CategorySelectorComponent } from './features/trivia/category-selector/category-selector.component';
 
 @Component({
   selector: 'app-root',
