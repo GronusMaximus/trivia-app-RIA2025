@@ -1,0 +1,13 @@
+<div *ngIf="loading">
+    <mat-spinner></mat-spinner>
+    <p>Cargando preguntas...</p>
+</div>
+
+<div *ngIf="!loading && question">
+    <app-timer [duration]="timerDuration" (finished)="onTimerEnd()"></app-timer>
+    <app-question-card [question]="question" (answer)="onAnswer($event)"></app-question-card>
+    <div>
+        <p>Pregunta {{ current + 1 }} de {{ settings.questions.length }}</p>
+        <p>Correctas: {{ settings.correctCount }}</p>
+    </div>
+</div>
