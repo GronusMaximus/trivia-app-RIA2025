@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia App - Mockup</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title">🧠 Trivia Challenge</h1>
+            <div class="theme-toggle">
+                <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" onclick="showScreen('category')">Categorías</button>
+            <button class="tab-btn" onclick="showScreen('config')">Configuración</button>
+            <button class="tab-btn" onclick="showScreen('game')">Juego</button>
+            <button class="tab-btn" onclick="showScreen('results')">Resultados</button>
+        </nav>
+
+        <!-- Screen 1: Category Selection -->
+        <section id="category-screen" class="screen active">
+            <div class="screen-content">
+                <h2 class="screen-title">Selecciona una Categoría</h2>
+                <p class="screen-subtitle">Elige el tema que más te guste</p>
+                
+                <div class="categories-grid">
+                    <div class="category-card selected">
+                        <div class="category-icon">🎬</div>
+                        <h3>Entretenimiento: Películas</h3>
+                        <p>Preguntas sobre cine y películas</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">🏃‍♂️</div>
+                        <h3>Deportes</h3>
+                        <p>Preguntas sobre deportes y atletas</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">🔬</div>
+                        <h3>Ciencia y Naturaleza</h3>
+                        <p>Preguntas científicas y naturales</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">📚</div>
+                        <h3>Historia</h3>
+                        <p>Eventos históricos importantes</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">🎵</div>
+                        <h3>Música</h3>
+                        <p>Artistas, canciones y géneros</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-card">
+                        <div class="category-icon">🌍</div>
+                        <h3>Geografía</h3>
+                        <p>Países, capitales y lugares</p>
+                    </div>
+                </div>
+                
+                <button class="primary-btn">Continuar</button>
+            </div>
+        </section>
+
+        <!-- Screen 2: Game Configuration -->
+        <section id="config-screen" class="screen">
+            <div class="screen-content">
+                <h2 class="screen-title">Configuración del Juego</h2>
+                <p class="screen-subtitle">Personaliza tu experiencia</p>
+                
+                <div class="config-section">
+                    <h3 class="config-label">Dificultad</h3>
+                    <div class="option-group">
+                        <button class="option-btn">Fácil</button>
+                        <button class="option-btn selected">Medio</button>
+                        <button class="option-btn">Difícil</button>
+                    </div>
+                </div>
+                
+                <div class="config-section">
+                    <h3 class="config-label">Tipo de Pregunta</h3>
+                    <div class="option-group">
+                        <button class="option-btn selected">Opción Múltiple</button>
+                        <button class="option-btn">Verdadero/Falso</button>
+                    </div>
+                </div>
+                
+                <div class="config-section">
+                    <h3 class="config-label">Cantidad de Preguntas</h3>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                        <span class="quantity-display">10</span>
+                        <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                    </div>
+                    <div class="quantity-range">
+                        <span>5</span>
+                        <input type="range" min="5" max="20" value="10" class="range-slider">
+                        <span>20</span>
+                    </div>
+                </div>
+                
+                <div class="config-summary">
+                    <h4>Resumen:</h4>
+                    <p>📽️ Entretenimiento: Películas • 🎯 Medio • 🔢 10 preguntas • ✅ Opción múltiple</p>
+                </div>
+                
+                <button class="primary-btn large">🚀 Comenzar Trivia</button>
+            </div>
+        </section>
+
+        <!-- Screen 3: Game Screen -->
+        <section id="game-screen" class="screen">
+            <div class="screen-content">
+                <div class="game-header">
+                    <div class="progress-section">
+                        <div class="progress-info">
+                            <span class="question-counter">Pregunta 3 de 10</span>
+                            <span class="timer">⏱️ 0:15</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question-section">
+                    <div class="question-card">
+                        <h3 class="question-text">¿Cuál de estas películas fue dirigida por Christopher Nolan?</h3>
+                    </div>
+                    
+                    <div class="answers-grid">
+                        <button class="answer-btn">
+                            <span class="answer-letter">A</span>
+                            <span class="answer-text">Pulp Fiction</span>
+                        </button>
+                        
+                        <button class="answer-btn selected">
+                            <span class="answer-letter">B</span>
+                            <span class="answer-text">Inception</span>
+                        </button>
+                        
+                        <button class="answer-btn">
+                            <span class="answer-letter">C</span>
+                            <span class="answer-text">The Matrix</span>
+                        </button>
+                        
+                        <button class="answer-btn">
+                            <span class="answer-letter">D</span>
+                            <span class="answer-text">Fight Club</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-actions">
+                    <button class="secondary-btn">Saltar Pregunta</button>
+                    <button class="primary-btn">Confirmar Respuesta</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 4: Results Screen -->
+        <section id="results-screen" class="screen">
+            <div class="screen-content">
+                <div class="results-header">
+                    <div class="score-circle">
+                        <div class="score-number">8</div>
+                        <div class="score-total">/10</div>
+                    </div>
+                    <h2 class="results-title">¡Excelente trabajo!</h2>
+                    <p class="results-subtitle">Has respondido correctamente 8 de 10 preguntas</p>
+                    <div class="score-percentage">80%</div>
+                </div>
+                
+                <div class="results-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <span class="stat-number">8</span>
+                            <span class="stat-label">Correctas</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-info">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label">Incorrectas</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-info">
+                            <span class="stat-number">2:45</span>
+                            <span class="stat-label">Tiempo</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-review">
+                    <h3>Revisión de Respuestas</h3>
+                    
+                    <div class="review-item correct">
+                        <div class="review-header">
+                            <span class="review-number">1</span>
+                            <span class="review-status">✅</span>
+                        </div>
+                        <div class="review-content">
+                            <p class="review-question">¿Cuál es la capital de Francia?</p>
+                            <p class="review-answer">Tu respuesta: <strong>París</strong> ✓</p>
+                        </div>
+                    </div>
+                    
+                    <div class="review-item incorrect">
+                        <div class="review-header">
+                            <span class="review-number">2</span>
+                            <span class="review-status">❌</span>
+                        </div>
+                        <div class="review-content">
+                            <p class="review-question">¿En qué año se estrenó Titanic?</p>
+                            <p class="review-answer">Tu respuesta: <strong>1996</strong></p>
+                            <p class="review-correct">Respuesta correcta: <strong>1997</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="review-item correct">
+                        <div class="review-header">
+                            <span class="review-number">3</span>
+                            <span class="review-status">✅</span>
+                        </div>
+                        <div class="review-content">
+                            <p class="review-question">¿Cuál de estas películas fue dirigida por Christopher Nolan?</p>
+                            <p class="review-answer">Tu respuesta: <strong>Inception</strong> ✓</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-actions">
+                    <button class="secondary-btn">🏠 Volver al Inicio</button>
+                    <button class="primary-btn">🔄 Jugar de Nuevo</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
