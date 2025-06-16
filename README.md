@@ -37,6 +37,11 @@ Para ver todas las opciones disponibles:
 ng generate --help
 ```
 
+## 🖼️ Mockup de la aplicación
+
+![Vista previa del mockup](./docs/mockup.png)
+
+
 ## 🧪 Testing
 
 ### Tests unitarios
