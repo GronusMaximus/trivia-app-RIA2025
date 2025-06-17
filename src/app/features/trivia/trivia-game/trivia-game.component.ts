@@ -33,25 +33,62 @@ export class TriviaGameComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
-    this.settings.resetGame();
-    this.trivia.getToken().subscribe((token: string) => {
+    shuffleAnswers(options: string[]): string[] {
+    return options
+      .map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+  }
+
+ngOnInit() {
+  console.log('[TriviaGameComponent] Iniciando juego...');
+  console.log('Parámetros actuales:', {
+    amount: this.settings.amount,
+    categoryId: this.settings.categoryId,
+    difficulty: this.settings.difficulty,
+    type: this.settings.type
+  });
+
+  this.settings.resetGame();
+
+  this.trivia.getToken().subscribe({
+    next: (token: string) => {
+      console.log('[TriviaGameComponent] Token obtenido:', token);
+
       this.trivia.getQuestions({
         amount: this.settings.amount,
         category: this.settings.categoryId || undefined,
         difficulty: this.settings.difficulty,
         type: this.settings.type,
         token
-      }).subscribe((qs: any[]) => {
-        this.settings.questions = qs;
-        this.loading = false;
-        this.setCurrentQuestion();
+      }).subscribe({
+        next: (qs: any[]) => {
+          const preguntasConOpciones = qs.map(q => ({
+            ...q,
+            all_answers: this.shuffleAnswers([q.correct_answer, ...q.incorrect_answers])
+          }));
+
+          this.settings.questions = preguntasConOpciones;
+          console.log('[TriviaGameComponent] Preguntas con respuestas mezcladas:', this.settings.questions);
+
+          this.loading = false;
+          this.setCurrentQuestion();
+        },
+        error: (err) => {
+          console.error('[TriviaGameComponent] Error al obtener preguntas:', err);
+        }
       });
-    });
-  }
+    },
+    error: (err) => {
+      console.error('[TriviaGameComponent] Error al obtener token:', err);
+    }
+  });
+}
+
 
   setCurrentQuestion() {
     this.question = this.settings.questions[this.current];
+    console.log('[TriviaGameComponent] Pregunta actual:', this.question);
   }
 
   onAnswer(answer: string) {

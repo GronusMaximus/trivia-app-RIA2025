@@ -10,7 +10,8 @@ import { AnswerOptionComponent } from '../answer-option/answer-option.component'
   template: `
     <mat-card *ngIf="question">
       <div><strong>{{ question.category }}</strong></div>
-      <div [innerHTML]="question.question"></div>
+      <!-- ⬇️ Línea modificada para decodificar HTML -->
+      <div [innerHTML]="decodeHtml(question.question)"></div>
       <div>
         <app-answer-option
           *ngFor="let opt of question.all_answers"
@@ -28,5 +29,11 @@ export class QuestionCardComponent {
   onSelect(opt: string) {
     this.answer.emit(opt);
   }
-}
 
+  
+  decodeHtml(html: string): string {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value;
+  }
+}

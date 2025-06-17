@@ -30,7 +30,6 @@ export class GameSetupComponent {
     private settings: SettingsService,
     private router: Router
   ) {
-    // Inicializa el formulario con los valores actuales de SettingsService o valores por defecto
     this.setupForm = this.fb.group({
       difficulty: [this.settings.difficulty],
       type: [this.settings.type],
