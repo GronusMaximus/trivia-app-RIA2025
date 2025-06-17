@@ -1,15 +1,21 @@
-<div class="category-container">
-  <h2>Selecciona una categoría</h2>
+<section class="screen active">
+  <div class="screen-content">
+    <h2 class="screen-title">Selecciona una Categoría</h2>
+    <p class="screen-subtitle">Elige el tema que más te guste</p>
 
-  <div *ngIf="categories.length === 0">
-    <p>Cargando categorías...</p>
+    <div class="categories-grid">
+      <div
+        *ngFor="let category of categories"
+        class="category-card"
+        [class.selected]="category.id === selectedCategoryId"
+        (click)="selectCategory(category.id)"
+        tabindex="0"
+      >
+        <div class="category-icon">{{ getCategoryIcon(category.name) }}</div>
+        <h3>{{ category.name }}</h3>
+        <p>{{ getCategoryDescription(category.name) }}</p>
+      </div>
+    </div>
+
   </div>
-
-  <ul class="category-list">
-    <li *ngFor="let category of categories"
-        [class.selected]="selectedCategoryId === category.id"
-        (click)="selectCategory(category.id)">
-      {{ category.name }}
-    </li>
-  </ul>
-</div>
+</section>

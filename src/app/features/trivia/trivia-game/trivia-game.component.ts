@@ -8,6 +8,7 @@ import { QuestionCardComponent } from '../../../shared/components/ui/question-ca
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { Question } from '../../../core/models/question.model';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-trivia-game',
@@ -34,14 +35,14 @@ export class TriviaGameComponent implements OnInit {
 
   ngOnInit() {
     this.settings.resetGame();
-    this.trivia.getToken().subscribe(token => {
+    this.trivia.getToken().subscribe((token: string) => {
       this.trivia.getQuestions({
         amount: this.settings.amount,
         category: this.settings.categoryId || undefined,
         difficulty: this.settings.difficulty,
         type: this.settings.type,
         token
-      }).subscribe(qs => {
+      }).subscribe((qs: any[]) => {
         this.settings.questions = qs;
         this.loading = false;
         this.setCurrentQuestion();

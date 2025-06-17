@@ -15,9 +15,9 @@ export class TriviaService {
     return this.http
       .get<{ token: string }>(`${this.api}/api_token.php?command=request`)
       .pipe(
-        map((r) => {
-          this.token = r.token;
-          return r.token;
+        map((r: { token: string }) => {
+        this.token = r.token;
+        return r.token;
         })
       );
   }
@@ -35,10 +35,12 @@ export class TriviaService {
     if (params.type) query += `&type=${params.type}`;
     if (params.token) query += `&token=${params.token}`;
     return this.http.get<any>(`${this.api}/api.php?${query}`).pipe(
-      map(res => res.results.map((q: any) => ({
-        ...q,
-        all_answers: shuffle([q.correct_answer, ...q.incorrect_answers])
-      })))
+      map((res: { results: any[] }) =>
+        res.results.map((q: any) => ({
+          ...q,
+          all_answers: shuffle([q.correct_answer, ...q.incorrect_answers])
+        }))
+      )
     );
   }
 
