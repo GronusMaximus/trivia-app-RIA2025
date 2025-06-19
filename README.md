@@ -84,6 +84,22 @@ ng e2e
 
 ℹ️ Angular CLI no incluye framework E2E por defecto. Podés integrar herramientas como Cypress o Playwright si lo necesitás.
 
+## 🧭 Flujo de la Aplicación
+
+A continuación, se muestran imágenes del flujo típico dentro de la aplicación:
+
+1. **Pantalla de selección de categoría**
+   ![Selección de Categoría](./mockup/ss/category-selector.png)
+
+2. **Configuración de trivia**
+   ![Configuración de Juego](./mockup/ss/game-setting.png)
+
+3. **Juego de trivia en ejecución**
+   ![Juego en curso](./mockup/ss/trivia-game.png)
+
+4. **Pantalla de resultados**
+   ![Resultados del juego](./mockup/ss/game-results.png)
+
 ## 📂 Estructura detallada
 
 ```
