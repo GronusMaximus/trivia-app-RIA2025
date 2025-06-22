@@ -1,13 +1,42 @@
+
+<!-- Condicionales reales -->
 <div *ngIf="loading">
-    <mat-spinner></mat-spinner>
-    <p>Cargando preguntas...</p>
+  <mat-spinner></mat-spinner>
+  <p>Cargando preguntas...</p>
 </div>
 
 <div *ngIf="!loading && question">
-    <app-timer [duration]="timerDuration" (finished)="onTimerEnd()"></app-timer>
-    <app-question-card [question]="question" (answer)="onAnswer($event)"></app-question-card>
-    <div>
-        <p>Pregunta {{ current + 1 }} de {{ settings.questions.length }}</p>
-        <p>Correctas: {{ settings.correctCount }}</p>
+    <div class="game-header">
+    <div class="question-info">
+      Pregunta {{ current + 1 }} de {{ settings.questions.length }}
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" [style.width.%]="((current + 1) / settings.questions.length) * 100"></div>
+      </div>
     </div>
+    <div class="timer">
+      ⏱ {{ timerDuration }}s
+    </div>
+  </div>
+  <app-timer [duration]="timerDuration" (finished)="onTimerEnd()"></app-timer>
+
+  <ng-container [ngSwitch]="question.type">
+    <app-question-multiple
+      *ngSwitchCase="'multiple'"
+      [question]="question"
+      (answer)="onAnswer($event)">
+    </app-question-multiple>
+
+    <app-question-boolean
+      *ngSwitchCase="'boolean'"
+      [question]="question"
+      (answer)="onAnswer($event)">
+    </app-question-boolean>
+
+    <p *ngSwitchDefault style="color: red;">Tipo de pregunta no reconocido: {{ question.type }}</p>
+  </ng-container>
+
+  <div>
+    <p>Pregunta {{ current + 1 }} de {{ settings.questions.length }}</p>
+    <p>Correctas: {{ settings.correctCount }}</p>
+  </div>
 </div>

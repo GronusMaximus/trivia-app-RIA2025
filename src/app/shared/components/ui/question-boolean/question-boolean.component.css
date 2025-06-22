@@ -1,0 +1,39 @@
+.question-card {
+  margin: 2.5rem auto;
+  padding: 2rem;
+  max-width: 700px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease-in-out;
+}
+
+.category {
+  font-weight: 700;
+  text-align: center;
+  color: #3f51b5;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.text {
+  font-size: 1.25rem;
+  margin: 1rem 0 2.5rem;
+  text-align: center;
+  color: #333;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.boolean-button {
+  min-width: 160px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
