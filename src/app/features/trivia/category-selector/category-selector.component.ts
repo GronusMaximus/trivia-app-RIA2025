@@ -14,8 +14,11 @@ import { CategoryResponse } from '../../../core/models/category-response.model';
 })
 export class CategorySelectorComponent implements OnInit {
 
-  categories: { id: number, name: string }[] = [];
+  categories: { id: number; name: string }[] = [];
   selectedCategoryId: number | null = null;
+
+  loading = true;
+  errorMessage: string | null = null;
 
   constructor(
     private triviaService: TriviaService,
@@ -24,17 +27,27 @@ export class CategorySelectorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.triviaService.getCategories().subscribe((response: CategoryResponse) => {
-      this.categories = response.trivia_categories;
+    this.loading = true;
+    this.errorMessage = null;
+
+    this.triviaService.getCategories().subscribe({
+      next: (response: CategoryResponse) => {
+        this.categories = response.trivia_categories.map(c => ({ id: c.id, name: c.name }));
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = 'No se pudieron cargar las categorías.';
+        this.loading = false;
+      }
     });
   }
 
   selectCategory(id: number) {
     this.selectedCategoryId = id;
-    this.settings.categoryId = id;         // Guarda la selección globalmente
-    this.router.navigate(['/config']);     // Navega a la pantalla de configuración
+    this.settings.categoryId = id;
+    this.router.navigate(['/config']);
   }
-
 
   getCategoryIcon(name: string): string {
     const icons: { [key: string]: string } = {
@@ -61,7 +74,6 @@ export class CategorySelectorComponent implements OnInit {
       'Anime & Manga': '🧧',
       'Cartoon & Animations': '🎭'
     };
-
     return icons[name] || '❓';
   }
 

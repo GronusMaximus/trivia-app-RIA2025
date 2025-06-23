@@ -3,19 +3,26 @@
     <h2 class="screen-title">Selecciona una Categoría</h2>
     <p class="screen-subtitle">Elige el tema que más te guste</p>
 
-    <div class="categories-grid">
-      <div
-        *ngFor="let category of categories"
-        class="category-card"
-        [class.selected]="category.id === selectedCategoryId"
-        (click)="selectCategory(category.id)"
-        tabindex="0"
-      >
+    <!-- Spinner de carga -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Cargando categorías…</p>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="!loading && errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+      <button mat-raised-button color="primary" (click)="ngOnInit()">Reintentar</button>
+    </div>
+
+    <!-- Grilla de categorías -->
+    <div *ngIf="!loading && !errorMessage" class="categories-grid">
+      <div *ngFor="let category of categories" class="category-card"
+        [class.selected]="category.id === selectedCategoryId" (click)="selectCategory(category.id)" tabindex="0">
         <div class="category-icon">{{ getCategoryIcon(category.name) }}</div>
         <h3>{{ category.name }}</h3>
         <p>{{ getCategoryDescription(category.name) }}</p>
       </div>
     </div>
-
   </div>
 </section>
