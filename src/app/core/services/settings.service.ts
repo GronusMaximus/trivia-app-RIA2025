@@ -8,15 +8,21 @@ export class SettingsService {
     type: 'multiple' | 'boolean' = 'multiple';
     amount: number = 10;
 
-    // Game state
-    questions: Question[] = [];
+    private _questions: readonly Question[] = [];
+    get questions(): readonly Question[] {
+        return this._questions;
+    }
+    set questions(qs: readonly Question[]) {
+        this._questions = qs ?? [];
+    }
+
     userAnswers: string[] = [];
     correctCount: number = 0;
     totalTime: number = 0;
     finished: boolean = false;
 
-    resetGame() {
-        this.questions = [];
+    resetGame(): void {
+        this._questions = [];
         this.userAnswers = [];
         this.correctCount = 0;
         this.totalTime = 0;
