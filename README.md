@@ -32,13 +32,19 @@ npm install
 
 ## 🚀 Desarrollo y ejecución
 
-Para iniciar un servidor de desarrollo local, ejecutá:
+1. Instalá las dependencias del proyecto:
 
-```bash
-ng serve
-```
+   ```bash
+   npm install
+   ```
 
-Abrí tu navegador en `http://localhost:4200/`. La aplicación se recargará automáticamente al guardar cambios en los archivos fuente.
+2. Iniciá un servidor de desarrollo local:
+
+   ```bash
+   ng serve
+   ```
+
+3. Abrí tu navegador en `http://localhost:4200/`. La aplicación se recargará automáticamente al guardar cambios en los archivos fuente.
 
 ## 🛠️ Construcción para despliegue
 
@@ -63,6 +69,12 @@ Para ver todas las opciones disponibles:
 ```bash
 ng generate --help
 ```
+
+
+## 🖼️ Mockup de la aplicación
+
+![Vista previa del mockup](./docs/mockup.png)
+
 
 ## 🧪 Testing
 
