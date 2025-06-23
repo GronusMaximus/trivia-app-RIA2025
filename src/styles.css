@@ -286,7 +286,10 @@ body {
   background: var(--border-color);
   outline: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
+
 
 .range-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -726,6 +729,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
