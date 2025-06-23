@@ -17,7 +17,7 @@ El proyecto está compuesto por los siguientes componentes principales:
 
 ## 📌 Requisitos previos
 
-- Node.js (versión recomendada: 18 o superior)
+- Node.js (versión recomendada: 20.19 o superior)
 - Angular CLI versión 20
 
 ## ⚙️ Instalación del proyecto
@@ -26,25 +26,19 @@ Cloná el repositorio e instalá las dependencias con los siguientes comandos:
 
 ```bash
 git clone [URL_REPO]
-cd trivia-app
+cd trivia-app-RIA2025
 npm install
 ```
 
 ## 🚀 Desarrollo y ejecución
 
-1. Instalá las dependencias del proyecto:
-
-   ```bash
-   npm install
-   ```
-
-2. Iniciá un servidor de desarrollo local:
+1. Iniciá un servidor de desarrollo local:
 
    ```bash
    ng serve
    ```
 
-3. Abrí tu navegador en `http://localhost:4200/`. La aplicación se recargará automáticamente al guardar cambios en los archivos fuente.
+2. Abrí tu navegador en `http://localhost:4200/`. La aplicación se recargará automáticamente al guardar cambios en los archivos fuente.
 
 ## 🛠️ Construcción para despliegue
 
@@ -69,12 +63,6 @@ Para ver todas las opciones disponibles:
 ```bash
 ng generate --help
 ```
-
-
-## 🖼️ Mockup de la aplicación
-
-![Vista previa del mockup](./docs/mockup.png)
-
 
 ## 🧪 Testing
 
