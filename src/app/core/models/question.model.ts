@@ -1,9 +1,9 @@
 export interface Question {
-    category: string;
-    type: 'multiple' | 'boolean';
-    difficulty: string;
-    question: string;
-    correct_answer: string;
-    incorrect_answers: string[];
-    all_answers: string[]; // Para mezclar correctas/incorrectas en UI
+    readonly category: string;
+    readonly type: 'multiple' | 'boolean';
+    readonly difficulty: string;
+    readonly question: string;
+    readonly correct_answer: string;
+    readonly incorrect_answers: readonly string[];
+    readonly all_answers: readonly string[];
 }
