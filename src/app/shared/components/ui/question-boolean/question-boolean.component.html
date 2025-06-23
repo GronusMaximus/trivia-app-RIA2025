@@ -1,0 +1,25 @@
+<mat-card class="question-card">
+  <div class="question-content">
+    <h3 class="category">{{ question.category }}</h3>
+
+    <p class="text" [innerHTML]="decodeHtml(question.question)"></p>
+
+    <div class="options">
+      <button
+        mat-stroked-button
+        color="primary"
+        class="boolean-button"
+        (click)="onSelect('True')">
+        ✅ Verdadero
+      </button>
+
+      <button
+        mat-stroked-button
+        color="warn"
+        class="boolean-button"
+        (click)="onSelect('False')">
+        ❌ Falso
+      </button>
+    </div>
+  </div>
+</mat-card>

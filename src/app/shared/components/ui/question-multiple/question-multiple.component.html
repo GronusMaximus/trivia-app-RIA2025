@@ -1,0 +1,17 @@
+<mat-card class="question-card">
+  <div class="question-content">
+    <h2 class="question">{{ decodeHtml(question.question) }}</h2>
+    <div class="options">
+      <button
+        mat-button
+        class="option-button"
+        *ngFor="let opt of question.all_answers; let i = index"
+        (click)="onSelect(opt)">
+        <div class="option-content">
+          <span class="option-letter">{{ getOptionLetter(i) }}</span>
+          <span class="option-text" [innerHTML]="decodeHtml(opt)"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</mat-card>

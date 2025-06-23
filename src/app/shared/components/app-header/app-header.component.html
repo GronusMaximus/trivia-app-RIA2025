@@ -1,8 +1,11 @@
 <mat-toolbar color="primary">
-    <span style="font-weight: bold; letter-spacing: 2px;">Trivia App</span>
-    <span class="spacer"></span>
-    <!-- Navegación principal (puedes agregar routerLink o botones aquí) -->
-    <button mat-button routerLink="/">Categorías</button>
-    <button mat-button routerLink="/config">Configurar</button>
-    <button mat-button routerLink="/results">Resultados</button>
+  <span class="logo">
+    🧠 <strong>Trivia Challenge</strong>
+  </span>
+  <span class="spacer"></span>
+  <nav class="nav-links">
+    <a mat-button routerLink="/" routerLinkActive="active-link">Categorías</a>
+    <a mat-button routerLink="/config" routerLinkActive="active-link">Configurar</a>
+    <a mat-button routerLink="/results" routerLinkActive="active-link">Resultados</a>
+  </nav>
 </mat-toolbar>

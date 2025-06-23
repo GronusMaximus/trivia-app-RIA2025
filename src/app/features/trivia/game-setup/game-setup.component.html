@@ -1,27 +1,37 @@
-<mat-card>
-    <mat-card-title>Configurar trivia</mat-card-title>
+<section class="screen active">
+  <div class="screen-content">
+    <h2 class="screen-title">Configuración de la Trivia</h2>
+    <p class="screen-subtitle">Personaliza tu experiencia</p>
+
     <form [formGroup]="setupForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill" class="form-field">
-            <mat-label>Dificultad</mat-label>
-            <mat-select formControlName="difficulty">
-                <mat-option *ngFor="let diff of difficulties" [value]="diff.value">{{ diff.label }}</mat-option>
-            </mat-select>
-        </mat-form-field>
+      <div class="form-field">
+        <label for="difficulty">Dificultad:</label>
+        <select id="difficulty" formControlName="difficulty">
+          <option *ngFor="let d of difficulties" [value]="d.value">{{ d.label }}</option>
+        </select>
+      </div>
 
-        <mat-form-field appearance="fill" class="form-field">
-            <mat-label>Tipo de pregunta</mat-label>
-            <mat-select formControlName="type">
-                <mat-option *ngFor="let t of types" [value]="t.value">{{ t.label }}</mat-option>
-            </mat-select>
-        </mat-form-field>
+      <div class="form-field">
+        <label for="type">Tipo de pregunta:</label>
+        <select id="type" formControlName="type">
+          <option *ngFor="let t of types" [value]="t.value">{{ t.label }}</option>
+        </select>
+      </div>
 
-        <mat-form-field appearance="fill" class="form-field">
-            <mat-label>Cantidad de preguntas</mat-label>
-            <input matInput type="number" formControlName="amount" min="5" max="20">
-        </mat-form-field>
+      <div class="form-field">
+        <label for="amount">Cantidad de preguntas: {{ setupForm.value.amount }}</label>
+        <input
+          type="range"
+          id="amount"
+          formControlName="amount"
+          min="5"
+          max="20"
+        />
+      </div>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="setupForm.invalid">
-            Comenzar Trivia
-        </button>
+      <button class="primary-btn" type="submit" [disabled]="!setupForm.valid">
+        Iniciar Trivia
+      </button>
     </form>
-</mat-card>
+  </div>
+</section>
