@@ -8,4 +8,10 @@
     <a mat-button routerLink="/config" routerLinkActive="active-link">Configurar</a>
     <a mat-button routerLink="/results" routerLinkActive="active-link">Resultados</a>
   </nav>
+  <div class="theme-toggle">
+    <button class="theme-btn" (click)="toggleTheme()"
+      [attr.aria-label]="isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'">
+      {{ isDark ? '☀️' : '🌙' }}
+    </button>
+  </div>
 </mat-toolbar>

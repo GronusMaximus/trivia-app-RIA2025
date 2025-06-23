@@ -3,14 +3,14 @@ mat-toolbar {
   top: 0;
   z-index: 100;
   padding: 0 2rem;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .logo {
   font-size: 1.6rem;
   font-weight: bold;
-  color: #4f46e5;
+  color: var(--primary-color);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -22,7 +22,7 @@ mat-toolbar {
 
 .nav-links a {
   font-weight: 500;
-  color: #4f46e5;
+  color: var(--primary-color);
   margin-left: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -31,9 +31,9 @@ mat-toolbar {
 }
 
 .nav-links a:hover {
-  background-color: rgba(79, 70, 229, 0.1);
+  background-color: var(--bg-secondary);
 }
 
 .active-link {
-  background-color: rgba(79, 70, 229, 0.15);
+  background-color: rgba(99, 102, 241, 0.15);
 }
