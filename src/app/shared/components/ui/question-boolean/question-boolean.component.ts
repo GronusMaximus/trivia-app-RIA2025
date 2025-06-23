@@ -15,14 +15,26 @@ export class QuestionBooleanComponent {
   @Input() question!: Question;
   @Output() answer = new EventEmitter<string>();
 
+  selectedOption: string | null = null;
+  isCorrect: boolean | null = null;
+
   decodeHtml(html: string): string {
     const txt = document.createElement('textarea');
     txt.innerHTML = html;
     return txt.value;
   }
 
-  onSelect(opt: string) {
-    this.answer.emit(opt);
+  onSelect(opt: 'True' | 'False'): void {
+    if (this.selectedOption !== null) {
+      return;
+    }
+    this.selectedOption = opt;
+    this.isCorrect = (opt === 'True' && this.question.correct_answer === 'True') ||
+      (opt === 'False' && this.question.correct_answer === 'False');
+    setTimeout(() => {
+      this.answer.emit(opt);
+      this.selectedOption = null;
+      this.isCorrect = null;
+    }, 800);
   }
 }
-  

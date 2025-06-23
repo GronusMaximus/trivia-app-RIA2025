@@ -2,25 +2,16 @@
   margin: 2.5rem auto;
   padding: 2rem;
   max-width: 700px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease-in-out;
-}
-
-.category {
-  font-weight: 700;
-  text-align: center;
-  color: #3f51b5;
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
 }
 
 .text {
   font-size: 1.25rem;
   margin: 1rem 0 2.5rem;
   text-align: center;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .options {
@@ -36,4 +27,26 @@
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.boolean-button:hover:not(:disabled) {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+.boolean-button.correct {
+  border-color: var(--success-color);
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.boolean-button.incorrect {
+  border-color: var(--error-color);
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--error-color);
+}
+
+.boolean-button:disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }

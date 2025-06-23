@@ -1,23 +1,19 @@
 <mat-card class="question-card">
   <div class="question-content">
-    <h3 class="category">{{ question.category }}</h3>
-
     <p class="text" [innerHTML]="decodeHtml(question.question)"></p>
-
     <div class="options">
-      <button
-        mat-stroked-button
-        color="primary"
-        class="boolean-button"
-        (click)="onSelect('True')">
+      <button mat-stroked-button class="boolean-button" [disabled]="selectedOption !== null" (click)="onSelect('True')"
+        [ngClass]="{
+          correct: selectedOption === 'True' && isCorrect,
+          incorrect: selectedOption === 'True' && isCorrect === false
+        }">
         ✅ Verdadero
       </button>
-
-      <button
-        mat-stroked-button
-        color="warn"
-        class="boolean-button"
-        (click)="onSelect('False')">
+      <button mat-stroked-button class="boolean-button" [disabled]="selectedOption !== null" (click)="onSelect('False')"
+        [ngClass]="{
+          correct: selectedOption === 'False' && isCorrect,
+          incorrect: selectedOption === 'False' && isCorrect === false
+        }">
         ❌ Falso
       </button>
     </div>
