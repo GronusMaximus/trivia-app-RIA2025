@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 import { TriviaService } from '../../../core/services/trivia.service';
 import { SettingsService } from '../../../core/services/settings.service';
 import { materialImports } from '../../../shared/material';
@@ -16,7 +17,6 @@ export class CategorySelectorComponent implements OnInit {
 
   categories: { id: number; name: string }[] = [];
   selectedCategoryId: number | null = null;
-
   loading = true;
   errorMessage: string | null = null;
 
@@ -26,24 +26,22 @@ export class CategorySelectorComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.loading = true;
     this.errorMessage = null;
 
-    this.triviaService.getCategories().subscribe({
-      next: (response: CategoryResponse) => {
-        this.categories = response.trivia_categories.map(c => ({ id: c.id, name: c.name }));
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error(err);
-        this.errorMessage = 'No se pudieron cargar las categorías.';
-        this.loading = false;
-      }
-    });
+    try {
+      const response = await lastValueFrom(this.triviaService.getCategories());
+      this.categories = response.trivia_categories.map(c => ({ id: c.id, name: c.name }));
+    } catch (err) {
+      console.error(err);
+      this.errorMessage = 'No se pudieron cargar las categorías.';
+    } finally {
+      this.loading = false;
+    }
   }
 
-  selectCategory(id: number) {
+  selectCategory(id: number): void {
     this.selectedCategoryId = id;
     this.settings.categoryId = id;
     this.router.navigate(['/config']);
