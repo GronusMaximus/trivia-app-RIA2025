@@ -201,9 +201,7 @@ async ngOnInit(): Promise<void> {
    - Cálculo de estadísticas: número de aciertos, fallos y porcentaje.  
    - Renderizado de resultados en la plantilla y prueba de formatos de salida.
 
----
-
-### Herramientas Utilizadas
+#### Herramientas Utilizadas
 
 - **Angular TestBed**: configuración de módulo de pruebas.  
 - **ComponentFixture**: manipulación del fixture para detección de cambios.  
