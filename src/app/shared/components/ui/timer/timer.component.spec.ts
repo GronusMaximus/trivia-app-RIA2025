@@ -1,4 +1,4 @@
-import 'zone.js/testing';           // <-- Esto debe estar primero
+import 'zone.js/testing';
 import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { TimerComponent } from './timer.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,59 +15,58 @@ describe('TimerComponent', () => {
                 MatIconModule,
                 NoopAnimationsModule
             ]
-        }).compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(TimerComponent);
-                component = fixture.componentInstance;
-            });
+        }).compileComponents().then(() => {
+            fixture = TestBed.createComponent(TimerComponent);
+            component = fixture.componentInstance;
+        });
     }));
 
     it('should emit initial tick equal to duration on init', fakeAsync(() => {
         const ticks: number[] = [];
         component.duration = 5;
-        component.tick.subscribe(value => ticks.push(value));
+        component.tick.subscribe(v => ticks.push(v));
 
-        fixture.detectChanges(); // triggers ngOnInit
-        tick(); // advance fake timer by 0ms to flush init
-
+        fixture.detectChanges();
+        tick();
         expect(ticks).toEqual([5]);
     }));
 
-    it('should emit tick every second and decrement until zero', fakeAsync(() => {
+    it('should emit tick every second and decrement until zero then stop', fakeAsync(() => {
         const ticks: number[] = [];
+        const finishedSpy = jasmine.createSpy('finished');
         component.duration = 3;
-        component.tick.subscribe(value => ticks.push(value));
-        component.finished.subscribe(() => ticks.push(-1)); // mark finish
+        component.tick.subscribe(v => ticks.push(v));
+        component.finished.subscribe(finishedSpy);
 
-        fixture.detectChanges(); // ngOnInit
-        // initial
+        fixture.detectChanges();
+
         tick(0);
         expect(ticks).toEqual([3]);
 
-        // after 1s
         tick(1000);
         expect(ticks).toEqual([3, 2]);
 
-        // after 2s
         tick(1000);
         expect(ticks).toEqual([3, 2, 1]);
 
-        // after 3s: reaches zero, emits 0, then finished
         tick(1000);
-        expect(ticks).toEqual([3, 2, 1, 0, -1]);
+        expect(ticks).toEqual([3, 2, 1, 0]);
+        expect(finishedSpy).toHaveBeenCalled();
 
-        // further ticks should not emit anything
         tick(2000);
-        expect(ticks).toEqual([3, 2, 1, 0, -1]);
+        expect(ticks).toEqual([3, 2, 1, 0]);
     }));
 
     it('should clear interval on destroy', fakeAsync(() => {
         spyOn(window, 'clearInterval').and.callThrough();
+
         component.duration = 2;
-        fixture.detectChanges(); // ngOnInit
+        fixture.detectChanges();
         tick(0);
 
+        const id = (component as any).timerId;
         component.ngOnDestroy();
-        expect(clearInterval).toHaveBeenCalledWith(component['timerId']);
+
+        expect(clearInterval).toHaveBeenCalledWith(id);
     }));
 });
