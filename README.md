@@ -131,6 +131,21 @@ Durante el desarrollo la aplicación se sirve con el **Live Development Server**
 
 Para producción, un `ng build` genera la carpeta `dist/trivia-app/` con archivos estáticos, lista para servir desde cualquier servidor web (por ejemplo, Node/Express, Nginx, Apache, Vercel, Firebase Hosting, etc.).
 
+## 📡 Servicios REST Utilizados
+
+La aplicación consume los siguientes endpoints de la API de [OpenTDB](https://opentdb.com/):
+
+| Endpoint                                 | Método | Descripción                                                                                         |
+|------------------------------------------|--------|-----------------------------------------------------------------------------------------------------|
+| `/api_category.php`                      | GET    | Recupera la lista de categorías disponibles.                                                        |
+| `/api_token.php?command=request`         | GET    | Solicita un token de sesión para evitar repeticiones de preguntas.                                  |
+| `/api.php?amount={n}`                    | GET    | Obtiene `{n}` preguntas aleatorias.                                                                 |
+| `/api.php?amount={n}&category={id}`      | GET    | Obtiene `{n}` preguntas de la categoría con el identificador `{id}`.                                |
+| `/api.php?amount={n}&difficulty={lvl}`   | GET    | Obtiene `{n}` preguntas de dificultad `easy` \| `medium` \| `hard`.                                 |
+| `/api.php?amount={n}&type={type}`        | GET    | Obtiene `{n}` preguntas de tipo `multiple` \| `boolean`.                                            |
+| `/api.php?...&token={token}`             | GET    | Incluye el token obtenido para sesiones sin repetir preguntas (`token` opcional pero recomendado). |
+
+
 ---
 
 ## 🎲 Cómo jugar
