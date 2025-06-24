@@ -18,18 +18,20 @@
         </div>
       </div>
     </div>
-    <div class="timer" *ngIf="timeLeft !== null">
-      ⏱ {{ timeLeft }}s
-    </div>
   </div>
 
-  <app-timer [duration]="timerDuration" (tick)="onTick($event)" (finished)="onTimerEnd()"></app-timer>
+  <ng-container *ngIf="showTimer">
+    <app-timer [duration]="timerDuration" (tick)="onTick($event)" (finished)="onTimerEnd()">
+    </app-timer>
+  </ng-container>
 
   <ng-container [ngSwitch]="question.type">
-    <app-question-multiple *ngSwitchCase="'multiple'" [question]="question"
-      (answer)="onAnswer($event)"></app-question-multiple>
-    <app-question-boolean *ngSwitchCase="'boolean'" [question]="question"
-      (answer)="onAnswer($event)"></app-question-boolean>
+    <app-question-multiple *ngSwitchCase="'multiple'" [question]="question" (answer)="onAnswer($event)">
+    </app-question-multiple>
+
+    <app-question-boolean *ngSwitchCase="'boolean'" [question]="question" (answer)="onAnswer($event)">
+    </app-question-boolean>
+
     <p *ngSwitchDefault class="unknown-type">
       Tipo de pregunta no reconocido: {{ question.type }}
     </p>
