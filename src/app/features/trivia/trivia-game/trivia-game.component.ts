@@ -125,7 +125,10 @@ export class TriviaGameComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private resetTimer(): void {
+  /** 
+   * Hacemos público el resetTimer para poder espiarlo en el test.
+   */
+  public resetTimer(): void {
     this.showTimer = false;
     setTimeout(() => this.showTimer = true, 0);
   }

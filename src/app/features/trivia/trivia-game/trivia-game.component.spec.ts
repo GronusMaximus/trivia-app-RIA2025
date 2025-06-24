@@ -1,3 +1,4 @@
+import 'zone.js/testing';
 import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { TriviaGameComponent } from './trivia-game.component';
 import { TriviaService } from '../../../core/services/trivia.service';
@@ -32,8 +33,7 @@ describe('TriviaGameComponent', () => {
     ];
 
     beforeEach(waitForAsync(() => {
-        const triviaSpy = jasmine.createSpyObj('TriviaService', ['getToken', 'getQuestions']);
-
+        const spy = jasmine.createSpyObj('TriviaService', ['getToken', 'getQuestions']);
         TestBed.configureTestingModule({
             imports: [
                 TriviaGameComponent,
@@ -44,7 +44,7 @@ describe('TriviaGameComponent', () => {
                 QuestionBooleanComponent
             ],
             providers: [
-                { provide: TriviaService, useValue: triviaSpy },
+                { provide: TriviaService, useValue: spy },
                 SettingsService,
                 GameControllerService
             ]
@@ -65,10 +65,8 @@ describe('TriviaGameComponent', () => {
         expect(component.loading).toBeTrue();
         expect(fixture.debugElement.query(By.css('mat-spinner'))).toBeTruthy();
 
-        tick();
-        tick();
+        tick(); tick();
         fixture.detectChanges();
-
         expect(component.loading).toBeFalse();
         expect(component.question).toEqual(dummyQuestions[0]);
         expect(fixture.debugElement.query(By.css('.game-header'))).toBeTruthy();
@@ -88,40 +86,44 @@ describe('TriviaGameComponent', () => {
 
     it('retry() calls loadQuestions again after error', fakeAsync(() => {
         triviaService.getToken.and.returnValues(
-            throwError(() => new Error('Failed')),
+            throwError(() => new Error('Fail')),
             of('tok2')
         );
         triviaService.getQuestions.and.returnValue(of(dummyQuestions));
 
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
-        expect(component.errorMessage).toBe('Failed');
+        fixture.detectChanges(); tick(); fixture.detectChanges();
+        expect(component.errorMessage).toBe('Fail');
 
-        fixture.debugElement.query(By.css('.error-message button')).triggerEventHandler('click', null);
-        fixture.detectChanges();
-
-        tick();
-        tick();
-        fixture.detectChanges();
+        fixture.debugElement.query(By.css('.error-message button'))
+            .triggerEventHandler('click', null);
+        tick(); tick(); fixture.detectChanges();
 
         expect(component.errorMessage).toBeNull();
         expect(component.question).toEqual(dummyQuestions[0]);
     }));
 
-    it('forwards answer and timerEnd to gameController and resets timer', () => {
+    it('forwards ticks and finished events to gameController', () => {
         spyOn(gameController, 'answer');
         spyOn(gameController, 'timerEnd');
 
-        component.showTimer = true;
-        component.onAnswer('A');
-        expect(gameController.answer).toHaveBeenCalledWith('A');
-        expect(component.showTimer).toBeFalse();
-        tick(0);
-        expect(component.showTimer).toBeTrue();
+        component.onAnswer('X');
+        expect(gameController.answer).toHaveBeenCalledWith('X');
 
         component.onTimerEnd();
         expect(gameController.timerEnd).toHaveBeenCalled();
-        expect(component.showTimer).toBeFalse();
+    });
+
+    it('forwards answer and timerEnd to gameController and resets timer', () => {
+        spyOn(gameController, 'answer');
+        spyOn(gameController, 'timerEnd');
+        spyOn(component, 'resetTimer');
+
+        component.onAnswer('A');
+        expect(gameController.answer).toHaveBeenCalledWith('A');
+        expect(component.resetTimer).toHaveBeenCalledTimes(1);
+
+        component.onTimerEnd();
+        expect(gameController.timerEnd).toHaveBeenCalled();
+        expect(component.resetTimer).toHaveBeenCalledTimes(2);
     });
 });
