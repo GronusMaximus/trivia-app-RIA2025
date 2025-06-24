@@ -1,13 +1,27 @@
 :host {
   display: block;
-  padding: 16px;
+  padding: var(--spacing-lg);
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 1rem;
+}
+
+.error-message {
+  text-align: center;
+  margin: 2rem 0;
 }
 
 .game-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-xl);
 }
 
 .question-info {
@@ -17,30 +31,34 @@
 .progress-bar-container {
   width: 100%;
   height: 8px;
-  background-color: #e0e0e0;
+  background-color: var(--border-color);
   border-radius: 4px;
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 0.5rem;
 }
 
 .progress-bar-fill {
   height: 100%;
-  background-color: #3f51b5;
-  width: 0;
+  background-color: var(--primary-color);
   transition: width 0.3s ease;
 }
 
 .timer {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-left: 16px;
+  font-weight: 600;
+  color: var(--warning-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-mat-spinner {
+ng-container[ng-switch] {
   display: block;
-  margin: 40px auto;
+  margin-top: var(--spacing-lg);
 }
 
-div>p {
-  margin: 8px 0;
+.results-summary {
+  margin-top: var(--spacing-xl);
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
 }
