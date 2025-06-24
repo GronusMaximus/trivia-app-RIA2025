@@ -1,8 +1,10 @@
+//import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Question } from '../../../../core/models/question.model';
+//import { TimerComponent } from '../timer/timer.component';
 
 @Component({
   selector: 'app-question-multiple',
@@ -17,6 +19,8 @@ export class QuestionMultipleComponent {
 
   selectedOption: string | null = null;
   isCorrect: boolean | null = null;
+
+   //@ViewChild('timer') timerComponent!: TimerComponent;
 
   decodeHtml(html: string): string {
     const txt = document.createElement('textarea');
@@ -38,6 +42,7 @@ export class QuestionMultipleComponent {
       this.answer.emit(opt);
       this.selectedOption = null;
       this.isCorrect = null;
+      //this.timerComponent.resetTimer();
     }, 800);
   }
 }

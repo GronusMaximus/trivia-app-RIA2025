@@ -26,31 +26,44 @@ import { materialImports } from '../../../material';
   `]
 })
 export class TimerComponent implements OnInit, OnDestroy {
-  @Input() duration = 30;
+  static resetTimer() {
+    throw new Error('Method not implemented.');
+  }
+  @Input() duration = 15;
   @Output() finished = new EventEmitter<void>();
-  @Output() tick = new EventEmitter<number>();  // ✅ NUEVO OUTPUT
+  @Output() tick = new EventEmitter<number>();
 
   timeLeft: number = 0;
   private timerId?: any;
 
   ngOnInit() {
+    this.resetTimer();
+  }
+
+  ngOnDestroy() {
+    this.clearTimer();
+  }
+
+  public resetTimer(): void {
+    this.clearTimer();
     this.timeLeft = this.duration;
-    this.tick.emit(this.timeLeft); // Emitir valor inicial
+    this.tick.emit(this.timeLeft);
 
     this.timerId = setInterval(() => {
       this.timeLeft--;
-      this.tick.emit(this.timeLeft); // Emitir cada segundo
+      this.tick.emit(this.timeLeft);
 
       if (this.timeLeft <= 0) {
         this.finished.emit();
-        clearInterval(this.timerId);
+        this.resetTimer(); // reinicia limpio al llegar a cero
       }
     }, 1000);
   }
 
-  ngOnDestroy() {
+  private clearTimer(): void {
     if (this.timerId) {
       clearInterval(this.timerId);
+      this.timerId = undefined;
     }
   }
 }

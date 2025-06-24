@@ -62,7 +62,7 @@ export function toggleTheme() {
 }
 
 // Temporizador de juego (ejemplo)
-export function startTimer(duration = 30) {
+export function startTimer(duration = 15) {
     let timeLeft = duration;
     const timerEl = document.querySelector<HTMLElement>(".timer");
     const interval = setInterval(() => {

@@ -28,7 +28,7 @@ export class TriviaGameComponent implements OnInit, OnDestroy {
   loading = true;
   errorMessage: string | null = null;
   question!: Question;
-  timerDuration = 30;
+  timerDuration = 15;
   timeLeft: number | null = null;
   private destroy$ = new Subject<void>();
 
