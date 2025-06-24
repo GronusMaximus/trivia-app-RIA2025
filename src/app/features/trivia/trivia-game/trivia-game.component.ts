@@ -30,6 +30,7 @@ export class TriviaGameComponent implements OnInit, OnDestroy {
   question!: Question;
   timerDuration = 15;
   timeLeft: number | null = null;
+  showTimer = true;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -70,18 +71,12 @@ export class TriviaGameComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: qs => {
-          if (!qs || qs.length === 0) {
-            this.errorMessage = 'No se encontraron preguntas.';
+          this.settings.questions = qs;
+          setTimeout(() => {
             this.loading = false;
+            this.initGame();
             this.cdr.detectChanges();
-          } else {
-            this.settings.questions = qs;
-            setTimeout(() => {
-              this.loading = false;
-              this.initGame();
-              this.cdr.detectChanges();
-            }, 0);
-          }
+          }, 0);
         },
         error: err => {
           this.errorMessage = err.message;
@@ -101,6 +96,7 @@ export class TriviaGameComponent implements OnInit, OnDestroy {
       .subscribe(q => {
         this.question = q;
         this.timeLeft = null;
+        this.resetTimer();
         this.cdr.detectChanges();
       });
   }
@@ -112,10 +108,12 @@ export class TriviaGameComponent implements OnInit, OnDestroy {
 
   onAnswer(answer: string): void {
     this.gameController.answer(answer);
+    this.resetTimer();
   }
 
   onTimerEnd(): void {
     this.gameController.timerEnd();
+    this.resetTimer();
   }
 
   retry(): void {
@@ -125,5 +123,10 @@ export class TriviaGameComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private resetTimer(): void {
+    this.showTimer = false;
+    setTimeout(() => this.showTimer = true, 0);
   }
 }

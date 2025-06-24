@@ -61,16 +61,14 @@ describe('TriviaGameComponent', () => {
         triviaService.getToken.and.returnValue(of('tok'));
         triviaService.getQuestions.and.returnValue(of(dummyQuestions));
 
-        // initial render
         fixture.detectChanges();
         expect(component.loading).toBeTrue();
         expect(fixture.debugElement.query(By.css('mat-spinner'))).toBeTruthy();
 
-        // advance through setTimeout(…,0) and observables
+        tick();
         tick();
         fixture.detectChanges();
 
-        // final state
         expect(component.loading).toBeFalse();
         expect(component.question).toEqual(dummyQuestions[0]);
         expect(fixture.debugElement.query(By.css('.game-header'))).toBeTruthy();
@@ -85,8 +83,7 @@ describe('TriviaGameComponent', () => {
 
         expect(component.loading).toBeFalse();
         expect(component.errorMessage).toBe('Tok fail');
-        const btn = fixture.debugElement.query(By.css('.error-message button'));
-        expect(btn).toBeTruthy();
+        expect(fixture.debugElement.query(By.css('.error-message button'))).toBeTruthy();
     }));
 
     it('retry() calls loadQuestions again after error', fakeAsync(() => {
@@ -101,10 +98,10 @@ describe('TriviaGameComponent', () => {
         fixture.detectChanges();
         expect(component.errorMessage).toBe('Failed');
 
-        const btn = fixture.debugElement.query(By.css('.error-message button'));
-        btn.triggerEventHandler('click', null);
+        fixture.debugElement.query(By.css('.error-message button')).triggerEventHandler('click', null);
         fixture.detectChanges();
 
+        tick();
         tick();
         fixture.detectChanges();
 
@@ -112,14 +109,19 @@ describe('TriviaGameComponent', () => {
         expect(component.question).toEqual(dummyQuestions[0]);
     }));
 
-    it('forwards ticks and finished events to gameController', () => {
+    it('forwards answer and timerEnd to gameController and resets timer', () => {
         spyOn(gameController, 'answer');
         spyOn(gameController, 'timerEnd');
 
+        component.showTimer = true;
         component.onAnswer('A');
         expect(gameController.answer).toHaveBeenCalledWith('A');
+        expect(component.showTimer).toBeFalse();
+        tick(0);
+        expect(component.showTimer).toBeTrue();
 
         component.onTimerEnd();
         expect(gameController.timerEnd).toHaveBeenCalled();
+        expect(component.showTimer).toBeFalse();
     });
 });
