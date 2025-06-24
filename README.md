@@ -121,6 +121,16 @@ A continuación, se muestran imágenes del flujo típico dentro de la aplicació
 
 Esta aplicación consume la [Open Trivia Database (OpenTDB)](https://opentdb.com/), que provee preguntas de trivia gratuitas clasificadas por categoría, dificultad y tipo. La comunicación con la API se realiza desde el servicio `TriviaService` a través de peticiones HTTP para obtener tokens de sesión y preguntas dinámicas.
 
+## 🖥️ Servidor de Desarrollo
+
+Durante el desarrollo la aplicación se sirve con el **Live Development Server** de Angular, que corre sobre Node.js y utiliza `webpack-dev-server` para:
+
+- Servir los ficheros en `http://localhost:4200/`
+- Reconstruir y recargar automáticamente al detectar cambios
+- Proporcionar HMR (Hot Module Replacement) para CSS y templates
+
+Para producción, un `ng build` genera la carpeta `dist/trivia-app/` con archivos estáticos, lista para servir desde cualquier servidor web (por ejemplo, Node/Express, Nginx, Apache, Vercel, Firebase Hosting, etc.).
+
 ---
 
 ## 🎲 Cómo jugar
