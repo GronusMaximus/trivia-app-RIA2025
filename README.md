@@ -145,6 +145,78 @@ Durante el desarrollo la aplicación se sirve con el **Live Development Server**
 
 Para producción, un `ng build` genera la carpeta `dist/trivia-app/` con archivos estáticos, lista para servir desde cualquier servidor web (por ejemplo, Node/Express, Nginx, Apache, Vercel, Firebase Hosting, etc.).
 
+## Uso de `async` en `CategorySelectorComponent`
+
+En el componente Angular `CategorySelectorComponent`, marcamos el método del ciclo de vida `ngOnInit` como `async` para poder utilizar `await` dentro de él y simplificar la gestión de respuestas asíncronas y errores. A continuación se explica paso a paso qué hace y por qué:
+
+```ts
+async ngOnInit(): Promise<void> {
+  this.loading = true;
+  this.errorMessage = null;
+
+  try {
+    // 1. lastValueFrom convierte el Observable en una Promise
+    //    para poder usar await de forma nativa.
+    const response = await lastValueFrom(this.triviaService.getCategories());
+
+    // 2. Una vez resuelta la promesa, transformamos los datos
+    this.categories = response.trivia_categories
+      .map(c => ({ id: c.id, name: c.name }));
+  } catch (err) {
+    // 3. Cualquier error en la petición HTTP queda atrapado aquí
+    console.error(err);
+    this.errorMessage = 'No se pudieron cargar las categorías.';
+  } finally {
+    // 4. Se ejecuta siempre, haya éxito o fallo, para ocultar el spinner
+    this.loading = false;
+  }
+}
+
+
+---
+
+## 🧪 Pruebas Unitarias Implementadas
+
+1. **TimerComponent**  
+   - Verifica emisión de ticks inicial (`tick.emit(duration)`).  
+   - Comprueba decremento cada segundo y emisión de `finished` al llegar a 0.  
+   - Asegura limpieza de intervalos en `ngOnDestroy()` con `clearInterval()`.
+
+2. **TriviaGameComponent**  
+   - Simulación de `TriviaService` (`getToken()`, `getQuestions()`) con `jasmine.createSpyObj`.  
+   - Control de estados: `loading`, `errorMessage` y renderizado de spinner o mensajes de error.  
+   - Envío de eventos `answer()` y `timerEnd()` al `GameControllerService` y reinicio del temporizador.
+
+3. **CategorySelectorComponent**  
+   - Conversión de `Observable` a `Promise` con `lastValueFrom()` y uso de `async/await` en `ngOnInit()`.  
+   - Gestión de carga (`loading`), captura de errores (`errorMessage`) y parada del spinner en `finally`.  
+   - Verificación de navegación y actualización de `SettingsService` al seleccionar categoría.
+
+4. **GameSetupComponent**  
+   - Pruebas de validación de formulario reactivo: marcas de campo obligatorio y estado de botón “Comenzar”.  
+   - Simulación de selección de cantidad de preguntas y dificultad.
+
+5. **GameResultsComponent**  
+   - Cálculo de estadísticas: número de aciertos, fallos y porcentaje.  
+   - Renderizado de resultados en la plantilla y prueba de formatos de salida.
+
+---
+
+### Herramientas Utilizadas
+
+- **Angular TestBed**: configuración de módulo de pruebas.  
+- **ComponentFixture**: manipulación del fixture para detección de cambios.  
+- **fakeAsync / tick**: simulación de paso de tiempo en pruebas asíncronas.  
+- **async / await**: pruebas de métodos marcados como `async`.  
+- **jasmine.createSpyObj**: creación de stubs y espías para servicios.  
+- **spyOn**: verificación de llamadas a métodos de servicios y router.  
+- **lastValueFrom**: conversión de `Observable` a `Promise` para usar `await`.  
+- **try/catch/finally**: manejo centralizado de errores y estados de carga.  
+- **Jasmine**: framework de pruebas unitarias para definir y ejecutar specs.  
+- **Karma**: test runner para ejecutar pruebas en navegadores.  
+- **Angular CLI**: comandos `ng test` para compilar y correr tests automáticamente.  
+- **Chrome Headless**: entorno de ejecución de pruebas en modo sin interfaz gráfica.  
+
 ---
 
 ## 🎲 Cómo jugar
