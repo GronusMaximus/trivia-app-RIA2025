@@ -117,6 +117,10 @@ A continuación, se muestran imágenes del flujo típico dentro de la aplicació
 - [Angular Component Interaction](https://angular.io/guide/component-interaction)
 - [Angular Routing & Navigation](https://angular.io/guide/router)
 
+## 🧩 API de Trivia
+
+Esta aplicación consume la [Open Trivia Database (OpenTDB)](https://opentdb.com/), que provee preguntas de trivia gratuitas clasificadas por categoría, dificultad y tipo. La comunicación con la API se realiza desde el servicio `TriviaService` a través de peticiones HTTP para obtener tokens de sesión y preguntas dinámicas.
+
 ---
 
 ## 🎲 Cómo jugar
